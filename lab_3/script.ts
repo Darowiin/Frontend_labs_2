@@ -1,97 +1,141 @@
 enum TypeDocument {
-    Passport,
-    DriverLicense,
-    IDCard
+    Passport = "Паспорт",
+    DriverLicense = "Водительское удостоверение",
+    IDCard = "Идентификационная карта"
 }
 
 interface Owner {
-    getLastName(): string;
-    getFirstName(): string;
-    getMiddleName(): string;
-    getBirthDate(): Date;
-    getTypeDocument(): TypeDocument;
-    getDocumentSeries(): string;
-    getDocumentNumber(): string;
+    lastName: string;
+    firstName: string;
+    middleName: string;
+    birthDate: Date;
+    TypeDocument: TypeDocument;
+    documentSeries: string;
+    documentNumber: string;
+
     printInfo(): void;
 }
 
-class Person implements Owner {
-    constructor(
-        private lastName: string,
-        private firstName: string,
-        private middleName: string,
-        private birthDate: Date,
-        private TypeDocument: TypeDocument,
-        private documentSeries: string,
-        private documentNumber: string
-    ) {}
-
-    getLastName(): string { return this.lastName; }
-    getFirstName(): string { return this.firstName; }
-    getMiddleName(): string { return this.middleName; }
-    getBirthDate(): Date { return this.birthDate; }
-    getTypeDocument(): TypeDocument { return this.TypeDocument; }
-    getDocumentSeries(): string { return this.documentSeries; }
-    getDocumentNumber(): string { return this.documentNumber; }
-
-    printInfo(): void {
-        console.log(`Владелец: ${this.lastName} ${this.firstName} ${this.middleName}, Дата рождения: ${this.birthDate.toDateString()}, ` +
-                    `Документ: ${TypeDocument[this.TypeDocument]} ${this.documentSeries} ${this.documentNumber}`);
-    }
-}
-
 interface Vehicle {
-    getBrand(): string;
-    getModel(): string;
-    getYear(): number;
-    getVin(): string;
-    getRegistrationNumber(): string;
-    getOwner(): Owner;
+    brand: string;
+    model: string;
+    year: number;
+    vin: string;
+    registrationNumber: string;
+    owner: Owner;
+
     printInfo(): void;
 }
 
 class BaseVehicle implements Vehicle {
-    constructor(
-        private brand: string,
-        private model: string,
-        private year: number,
-        private vin: string,
-        private registrationNumber: string,
-        private owner: Owner
-    ) {}
+    private _brand: string;
+    private _model: string;
+    private _year: number;
+    private _vin: string;
+    private _registrationNumber: string;
+    private _owner: Owner;
 
-    getBrand(): string { return this.brand; }
-    getModel(): string { return this.model; }
-    getYear(): number { return this.year; }
-    getVin(): string { return this.vin; }
-    getRegistrationNumber(): string { return this.registrationNumber; }
-    getOwner(): Owner { return this.owner; }
+    constructor(
+        brand: string,
+        model: string,
+        year: number,
+        vin: string,
+        registrationNumber: string,
+        owner: Owner
+    ) {
+        this._brand = brand;
+        this._model = model;
+        this._year = year;
+        this._vin = vin;
+        this._registrationNumber = registrationNumber;
+        this._owner = owner;
+    }
+
+    get brand() { return this._brand; }
+    get model() { return this._model; }
+    get year() { return this._year; }
+    get vin() { return this._vin; }
+    get registrationNumber() { return this._registrationNumber; }
+    get owner() { return this._owner; }
 
     printInfo(): void {
-        console.log(`Марка: ${this.brand}, Модель: ${this.model}, Год выпуска: ${this.year}, ` +
-                    `VIN: ${this.vin}, Регистрационный номер: ${this.registrationNumber}`);
+        console.log(`Транспортное средство:
+            Марка: ${this.brand}
+            Модель: ${this.model}
+            Год выпуска: ${this.year}
+            VIN: ${this.vin}
+            Регистрационный номер: ${this.registrationNumber}`);
+    }
+}
+
+class Person implements Owner {
+    private _lastName: string;
+    private _firstName: string;
+    private _middleName: string;
+    private _birthDate: Date;
+    private _TypeDocument: TypeDocument;
+    private _documentSeries: string;
+    private _documentNumber: string;
+
+    constructor(
+        lastName: string,
+        firstName: string,
+        middleName: string,
+        birthDate: Date,
+        TypeDocument: TypeDocument,
+        documentSeries: string,
+        documentNumber: string
+    ) {
+        this._lastName = lastName;
+        this._firstName = firstName;
+        this._middleName = middleName;
+        this._birthDate = birthDate;
+        this._TypeDocument = TypeDocument;
+        this._documentSeries = documentSeries;
+        this._documentNumber = documentNumber;
+    }
+
+    get lastName() { return this._lastName; }
+    get firstName() { return this._firstName; }
+    get middleName() { return this._middleName; }
+    get birthDate() { return this._birthDate; }
+    get TypeDocument() { return this._TypeDocument; }
+    get documentSeries() { return this._documentSeries; }
+    get documentNumber() { return this._documentNumber; }
+
+    printInfo(): void {
+        console.log(`Владелец:
+            Фамилия: ${this.lastName}
+            Имя: ${this.firstName}
+            Отчество: ${this.middleName}
+            Дата рождения: ${this.birthDate.toLocaleDateString()}
+            Тип документа: ${this.TypeDocument}
+            Серия документа: ${this.documentSeries}
+            Номер документа: ${this.documentNumber}`);
     }
 }
 
 enum CarBodyType {
-    Sedan,
-    SUV,
-    Hatchback,
-    Coupe
+    Sedan = "Седан",
+    SUV = "Внедорожник",
+    Hatchback = "Хэтчбек"
 }
 
 enum CarClass {
-    Economy,
-    Business,
-    Premium
+    Economy = "Эконом",
+    Business = "Бизнес",
+    Premium = "Премиум"
 }
 
 interface Car extends Vehicle {
-    getBodyType(): CarBodyType;
-    getCarClass(): CarClass;
+    bodyType: CarBodyType;
+    carClass: CarClass;
 }
 
 class Automobile extends BaseVehicle implements Car {
+    private _bodyType: CarBodyType;
+    private _carClass: CarClass;
+
     constructor(
         brand: string,
         model: string,
@@ -99,18 +143,21 @@ class Automobile extends BaseVehicle implements Car {
         vin: string,
         registrationNumber: string,
         owner: Owner,
-        private bodyType: CarBodyType,
-        private carClass: CarClass
+        bodyType: CarBodyType,
+        carClass: CarClass
     ) {
         super(brand, model, year, vin, registrationNumber, owner);
+        this._bodyType = bodyType;
+        this._carClass = carClass;
     }
 
-    getBodyType(): CarBodyType { return this.bodyType; }
-    getCarClass(): CarClass { return this.carClass; }
+    get bodyType() { return this._bodyType; }
+    get carClass() { return this._carClass; }
 
     printInfo(): void {
         super.printInfo();
-        console.log(`Тип кузова: ${CarBodyType[this.bodyType]}, Класс: ${CarClass[this.carClass]}`);
+        console.log(`Тип кузова: ${this.bodyType}
+            Класс автомобиля: ${this.carClass}`);
     }
 }
 
@@ -142,29 +189,40 @@ class Motorcycle extends BaseVehicle implements Motorbike {
     }
 }
 
-interface VehicleStorageClass<T extends Vehicle> {
-    getCreationDate(): Date;
-    getVehicles(): T[];
+
+interface VehicleStorage<T extends Vehicle> {
+    createdAt: Date;
+    vehicles: T[];
+
+    getAllVehicles(): T[];
 }
 
-class StorageClass<T extends Vehicle> implements VehicleStorageClass<T> {
-    constructor(
-        private creationDate: Date,
-        private vehicles: T[] = []
-    ) {}
+class StorageClass<T extends Vehicle> implements VehicleStorage<T> {
+    createdAt: Date;
+    vehicles: T[];
 
-    getCreationDate(): Date { return this.creationDate; }
-    getVehicles(): T[] { return this.vehicles; }
+    constructor() {
+        this.createdAt = new Date();
+        this.vehicles = [];
+    }
+
+    getAllVehicles(): T[] {
+        return this.vehicles;
+    }
+
+    addVehicle(vehicle: T): void {
+        this.vehicles.push(vehicle);
+    }
 }
-
 const owner = new Person("Иванов", "Иван", "Иванович", new Date("2000-05-15"), TypeDocument.Passport, "1234", "567890");
 const car = new Automobile("Toyota", "Corolla", 2020, "1HGCM82633A123456", "A123BC77", owner, CarBodyType.Sedan, CarClass.Business);
 const bike = new Motorcycle("Yamaha", "YZF-R6", 2019, "JYARJ16E1FA012345", "B456DE77", owner, "Алюминиевая", true);
 
-const storageClass = new StorageClass<Vehicle>(new Date());
-storageClass.getVehicles().push(car, bike);
+const storageClass = new StorageClass<Vehicle>();
+storageClass.addVehicle(car);
+storageClass.addVehicle(bike);
 
 car.printInfo();
 bike.printInfo();
 owner.printInfo();
-console.log("Все транспортные средства:", storageClass.getVehicles());
+console.log("Все транспортные средства:", storageClass.getAllVehicles());

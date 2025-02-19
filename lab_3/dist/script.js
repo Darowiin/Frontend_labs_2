@@ -1,75 +1,85 @@
 var TypeDocument;
 (function (TypeDocument) {
-    TypeDocument[TypeDocument["Passport"] = 0] = "Passport";
-    TypeDocument[TypeDocument["DriverLicense"] = 1] = "DriverLicense";
-    TypeDocument[TypeDocument["IDCard"] = 2] = "IDCard";
+    TypeDocument["Passport"] = "\u041F\u0430\u0441\u043F\u043E\u0440\u0442";
+    TypeDocument["DriverLicense"] = "\u0412\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u0441\u043A\u043E\u0435 \u0443\u0434\u043E\u0441\u0442\u043E\u0432\u0435\u0440\u0435\u043D\u0438\u0435";
+    TypeDocument["IDCard"] = "\u0418\u0434\u0435\u043D\u0442\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u043E\u043D\u043D\u0430\u044F \u043A\u0430\u0440\u0442\u0430";
 })(TypeDocument || (TypeDocument = {}));
-class Person {
-    constructor(lastName, firstName, middleName, birthDate, TypeDocument, documentSeries, documentNumber) {
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.birthDate = birthDate;
-        this.TypeDocument = TypeDocument;
-        this.documentSeries = documentSeries;
-        this.documentNumber = documentNumber;
-    }
-    getLastName() { return this.lastName; }
-    getFirstName() { return this.firstName; }
-    getMiddleName() { return this.middleName; }
-    getBirthDate() { return this.birthDate; }
-    getTypeDocument() { return this.TypeDocument; }
-    getDocumentSeries() { return this.documentSeries; }
-    getDocumentNumber() { return this.documentNumber; }
-    printInfo() {
-        console.log(`Владелец: ${this.lastName} ${this.firstName} ${this.middleName}, Дата рождения: ${this.birthDate.toDateString()}, ` +
-            `Документ: ${TypeDocument[this.TypeDocument]} ${this.documentSeries} ${this.documentNumber}`);
-    }
-}
 class BaseVehicle {
     constructor(brand, model, year, vin, registrationNumber, owner) {
-        this.brand = brand;
-        this.model = model;
-        this.year = year;
-        this.vin = vin;
-        this.registrationNumber = registrationNumber;
-        this.owner = owner;
+        this._brand = brand;
+        this._model = model;
+        this._year = year;
+        this._vin = vin;
+        this._registrationNumber = registrationNumber;
+        this._owner = owner;
     }
-    getBrand() { return this.brand; }
-    getModel() { return this.model; }
-    getYear() { return this.year; }
-    getVin() { return this.vin; }
-    getRegistrationNumber() { return this.registrationNumber; }
-    getOwner() { return this.owner; }
+    get brand() { return this._brand; }
+    get model() { return this._model; }
+    get year() { return this._year; }
+    get vin() { return this._vin; }
+    get registrationNumber() { return this._registrationNumber; }
+    get owner() { return this._owner; }
     printInfo() {
-        console.log(`Марка: ${this.brand}, Модель: ${this.model}, Год выпуска: ${this.year}, ` +
-            `VIN: ${this.vin}, Регистрационный номер: ${this.registrationNumber}`);
+        console.log(`Транспортное средство:
+            Марка: ${this.brand}
+            Модель: ${this.model}
+            Год выпуска: ${this.year}
+            VIN: ${this.vin}
+            Регистрационный номер: ${this.registrationNumber}`);
+    }
+}
+class Person {
+    constructor(lastName, firstName, middleName, birthDate, TypeDocument, documentSeries, documentNumber) {
+        this._lastName = lastName;
+        this._firstName = firstName;
+        this._middleName = middleName;
+        this._birthDate = birthDate;
+        this._TypeDocument = TypeDocument;
+        this._documentSeries = documentSeries;
+        this._documentNumber = documentNumber;
+    }
+    get lastName() { return this._lastName; }
+    get firstName() { return this._firstName; }
+    get middleName() { return this._middleName; }
+    get birthDate() { return this._birthDate; }
+    get TypeDocument() { return this._TypeDocument; }
+    get documentSeries() { return this._documentSeries; }
+    get documentNumber() { return this._documentNumber; }
+    printInfo() {
+        console.log(`Владелец:
+            Фамилия: ${this.lastName}
+            Имя: ${this.firstName}
+            Отчество: ${this.middleName}
+            Дата рождения: ${this.birthDate.toLocaleDateString()}
+            Тип документа: ${this.TypeDocument}
+            Серия документа: ${this.documentSeries}
+            Номер документа: ${this.documentNumber}`);
     }
 }
 var CarBodyType;
 (function (CarBodyType) {
-    CarBodyType[CarBodyType["Sedan"] = 0] = "Sedan";
-    CarBodyType[CarBodyType["SUV"] = 1] = "SUV";
-    CarBodyType[CarBodyType["Hatchback"] = 2] = "Hatchback";
-    CarBodyType[CarBodyType["Coupe"] = 3] = "Coupe";
+    CarBodyType["Sedan"] = "\u0421\u0435\u0434\u0430\u043D";
+    CarBodyType["SUV"] = "\u0412\u043D\u0435\u0434\u043E\u0440\u043E\u0436\u043D\u0438\u043A";
+    CarBodyType["Hatchback"] = "\u0425\u044D\u0442\u0447\u0431\u0435\u043A";
 })(CarBodyType || (CarBodyType = {}));
 var CarClass;
 (function (CarClass) {
-    CarClass[CarClass["Economy"] = 0] = "Economy";
-    CarClass[CarClass["Business"] = 1] = "Business";
-    CarClass[CarClass["Premium"] = 2] = "Premium";
+    CarClass["Economy"] = "\u042D\u043A\u043E\u043D\u043E\u043C";
+    CarClass["Business"] = "\u0411\u0438\u0437\u043D\u0435\u0441";
+    CarClass["Premium"] = "\u041F\u0440\u0435\u043C\u0438\u0443\u043C";
 })(CarClass || (CarClass = {}));
 class Automobile extends BaseVehicle {
     constructor(brand, model, year, vin, registrationNumber, owner, bodyType, carClass) {
         super(brand, model, year, vin, registrationNumber, owner);
-        this.bodyType = bodyType;
-        this.carClass = carClass;
+        this._bodyType = bodyType;
+        this._carClass = carClass;
     }
-    getBodyType() { return this.bodyType; }
-    getCarClass() { return this.carClass; }
+    get bodyType() { return this._bodyType; }
+    get carClass() { return this._carClass; }
     printInfo() {
         super.printInfo();
-        console.log(`Тип кузова: ${CarBodyType[this.bodyType]}, Класс: ${CarClass[this.carClass]}`);
+        console.log(`Тип кузова: ${this.bodyType}
+            Класс автомобиля: ${this.carClass}`);
     }
 }
 class Motorcycle extends BaseVehicle {
@@ -86,19 +96,24 @@ class Motorcycle extends BaseVehicle {
     }
 }
 class StorageClass {
-    constructor(creationDate, vehicles = []) {
-        this.creationDate = creationDate;
-        this.vehicles = vehicles;
+    constructor() {
+        this.createdAt = new Date();
+        this.vehicles = [];
     }
-    getCreationDate() { return this.creationDate; }
-    getVehicles() { return this.vehicles; }
+    getAllVehicles() {
+        return this.vehicles;
+    }
+    addVehicle(vehicle) {
+        this.vehicles.push(vehicle);
+    }
 }
 const owner = new Person("Иванов", "Иван", "Иванович", new Date("2000-05-15"), TypeDocument.Passport, "1234", "567890");
 const car = new Automobile("Toyota", "Corolla", 2020, "1HGCM82633A123456", "A123BC77", owner, CarBodyType.Sedan, CarClass.Business);
 const bike = new Motorcycle("Yamaha", "YZF-R6", 2019, "JYARJ16E1FA012345", "B456DE77", owner, "Алюминиевая", true);
-const storageClass = new StorageClass(new Date());
-storageClass.getVehicles().push(car, bike);
+const storageClass = new StorageClass();
+storageClass.addVehicle(car);
+storageClass.addVehicle(bike);
 car.printInfo();
 bike.printInfo();
 owner.printInfo();
-console.log("Все транспортные средства:", storageClass.getVehicles());
+console.log("Все транспортные средства:", storageClass.getAllVehicles());
